@@ -1,0 +1,51 @@
+<?php
+//
+//
+//function slack_log_preprocess_page(&$vars) {
+//
+////@todo create form where you can define the severity level, and the cron interval.
+//
+//
+//
+//  $config = Drupal::config('slack_log');
+//$severityLevel =
+//$boundary =
+//
+//
+//  $connection =  Drupal::Database();
+//  $query =  $connection->select('watchdog', 'wd')
+//    ->fields('wd', [
+//      'wid',
+//      'uid',
+//      'severity',
+//      'type',
+//      'timestamp',
+//      'message',
+//      'variables',])
+//   ->condition('wd.severity', $severityLevel, '<')
+//   ->condition('wd.timestamp', $boundary, '>');
+//
+//
+//  $result = $query->execute();
+//
+//  $result = $query->execute()->fetchAll();
+//
+//
+//  $config = \Drupal::config('slack.settings');
+//
+//  $channel = '@Michiel';
+//  $message = 'This is a message.';
+//
+//  $username = $config->get('slack_username');
+//
+//  $response = \Drupal::service('slack.slack_service')->sendMessage($message, $channel, $username);
+//
+//  if ($response && RedirectResponse::HTTP_OK == $response->getStatusCode()) {
+//    drupal_set_message(t('Message was successfully sent!'));
+//  }
+//  else {
+//    drupal_set_message(t('Please check log messages for further details'), 'warning');
+//  }
+//
+//}
+//
