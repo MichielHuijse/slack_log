@@ -1,0 +1,6 @@
+services:
+  slack_log.slack_log:
+    class: Drupal\slack_log\Logger\SlackLog
+    tags:
+    - { name: logger }
+    - { name: backend_overridable }

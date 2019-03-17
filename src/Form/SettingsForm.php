@@ -40,28 +40,47 @@ class SettingsForm extends ConfigFormBase {
   }
 
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('slack_log.settings');
 
-    $valueOptions = RfcLogLevel::getLevels();
 
-    $form['min_severity_level'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Minimal Severity Level'),
-      '#options' => $valueOptions,
-            '#description' => $this->t('What should be the minimal severity level to send a slack message?'),
-            '#default_value' => $config->get('min_severity_level'),
+      $default_checkbox = [];
+      $config = $this->config('slack_log.settings');
+      $levels = RfcLogLevel::getLevels();
+      $severity = $config->get('severity');
+      $enable_default_value = !empty($config->get('enable')) ? $config->get('enable') : 0;
+      foreach ($severity as $key => $value) {
+          if ($value) {
+              $default_checkbox[] = $key;
+          }
+      }
+      foreach ($levels as $key => $value) {
+          $options[$key] = $value->getUntranslatedString();
+      }
+      $form['enable'] = [
+          '#type' => 'checkbox',
+          '#title' => t('Enable Slack Notification?'),
+          '#default_value' => $enable_default_value,
+      ];
+      $form['severity'] = [
+          '#type' => 'checkboxes',
+          '#title' => t('Severity'),
+          '#options' => $options,
+          '#required' => TRUE,
+          '#default_value' => $default_checkbox,
+          '#description' => '<p>' . t('Choose Severity Level') . '</p>',
       ];
 
-    return parent::buildForm($form, $form_state);
+      return parent::buildForm($form, $form_state);
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+
     $config = $this->config('slack_log.settings');
     $config
-        ->set('min_severity_level', $form_state->getValue('min_severity_level'))
+        ->set('severity', $form_state->getValue('severity'))
+        ->set('enable', $form_state->getValue('enable'))
         ->save();
     parent::submitForm($form, $form_state);
   }
