@@ -3,6 +3,7 @@
 namespace Drupal\slack_log\Logger;
 
 use Drupal\Core\Logger\RfcLoggerTrait;
+use Drupal\slack_log\SlackMessageFormatter;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -22,7 +23,12 @@ class SlackLog implements LoggerInterface {
         $channel = $config->get('slack_channel');
         $username = $config->get('slack_username');
         $configSlackLog = \Drupal::config('slack_log.settings');
+
+        // built in a severity check.
         $severity = $configSlackLog->get('severity');
+
+
+        $message = new SlackMessageFormatter($message);
 
       $response = \Drupal::service('slack.slack_service')->sendMessage($message, $channel, $username);
 

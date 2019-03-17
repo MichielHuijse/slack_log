@@ -1,0 +1,9 @@
+<?php
+
+
+use Drupal\slack_log\SlackMessageFormatter;
+
+function slack_log_preprocess_page() {
+
+//dump();
+}
